@@ -1,4 +1,5 @@
 require 'csv'
+require 'faker'
 # contenido = File.read("clientes2.csv")
 # lineas = contenido.split("\n")
 
@@ -29,10 +30,24 @@ require 'csv'
 
 # puts "Estos son mis mejores clientes"
 # pp best_clients
-filename = "clientes.csv"
-clientes = []
-CSV.foreach(filename, headers: true, header_converters: :symbol)do |row|
-	clientes.push(row.to_h)
+# filename = "clientes.csv"
+# clientes = []
+# CSV.foreach(filename, headers: true, header_converters: :symbol)do |row|
+# 	clientes.push(row.to_h)
+# end
+# pp clientes
+
+def randon_data(rows, filename)
+	File.open(filename, "a") do |file|
+		rows.times do
+			nombre = Faker::Name.unique.name
+			email = Faker::Internet.email
+			username = Faker::Internet.username
+			token = Faker::Internet.uuid 
+			file.write("#{nombre},#{email},#{username},#{token}\n")
+		end
+	end
 end
 
-pp clientes
+randon_data(100, "usuarios.csv")
+randon_data(30, "deudores.csv")
