@@ -49,5 +49,17 @@ def randon_data(rows, filename)
 	end
 end
 
-randon_data(100, "usuarios.csv")
-randon_data(30, "deudores.csv")
+# randon_data(100, "usuarios.csv")
+# randon_data(30, "deudores.csv")
+
+filename = "clientes2.csv"
+CSV.open(filename, "w") do |csv|
+	csv << ["nombre", "email", "username", "token"]
+	100.times do
+		nombre = Faker::Name.unique.name
+		email = Faker::Internet.email
+		username = Faker::Internet.username
+		token = Faker::Internet.uuid 
+		csv << [nombre, email, username, token]
+	end
+end
